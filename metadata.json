@@ -1,0 +1,6 @@
+{
+  "name": "NextRide",
+  "description": "NextRide — Two-sided urban motorcycle ride & parcel delivery marketplace prototype.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,864 @@
+# MASTER BUILD PROMPT — NEXTRIDE ANDROID PROTOTYPE
+
+Act as a senior Android engineer, Flutter developer, mobile UI/UX designer, product architect, and QA engineer. Build a complete, polished, mobile-first Android prototype named **NextRide**.
+
+Do not merely explain how to build the app. Generate the actual application, all required source files, navigation, UI components, mock data, and build configuration. If the environment supports running or previewing the application, run it and fix any errors you can verify.
+
+## 1. PRODUCT VISION
+
+NextRide is a two-sided, Uber-style urban mobility marketplace focused exclusively on motorcycle/bike rides and motorcycle deliveries.
+
+The app has two primary user experiences:
+
+1. **Ridee:** A passenger who books a bike ride or requests delivery of a parcel.
+2. **Rider:** A motorcycle rider/driver who accepts passenger rides and delivery jobs and earns money.
+
+The application is a UI-only prototype. No real backend, real payments, real authentication, real GPS, real messaging, or real booking operations are required. However, all major interactions must behave convincingly using local mock data and in-memory application state.
+
+The result must look like a real commercial application, not a school project or a collection of unrelated wireframes.
+
+## 2. REQUIRED TECHNOLOGY AND ANDROID DELIVERABLE
+
+Preferred implementation:
+- Flutter with Dart.
+- Material 3 components with a fully customised visual theme.
+- Android application package name: `com.nextride.app`.
+- Application name: `NextRide`.
+- Portrait-first responsive layouts.
+- Minimum Android SDK: 24 or another compatible minimum supported by the chosen Flutter environment.
+- Use stable Flutter and Dart APIs.
+- Use local mock data and state management appropriate for a prototype.
+- Avoid requiring API keys, Firebase setup, paid services, or external credentials.
+
+If this environment cannot generate Flutter projects, use a complete native Android implementation with Kotlin and Jetpack Compose, while retaining the same design, screens, interactions and Android build deliverables. Do not create a web-only app and falsely claim it is a native Android application.
+
+Deliver the complete, compilable project source, not just snippets or a design description.
+
+Required Android deliverables:
+- Correct Android manifest and application configuration.
+- Gradle build files and wrapper where supported.
+- All required source files, assets and dependencies.
+- App icon and launcher configuration.
+- A debug APK build target.
+- A release APK build configuration, where supported.
+- A README containing exact commands to build and install the APK.
+- If you can run a build environment, actually build the debug APK and fix compilation errors before reporting completion.
+- If you cannot build the APK in this environment, clearly state that limitation and provide the complete source project and exact steps to generate the APK elsewhere.
+
+Never invent a successful build, test result, file path or downloadable APK.
+
+## 3. BRAND IDENTITY AND DESIGN SYSTEM
+
+Brand: NextRide
+
+Tagline: “Your city. Your ride. Your delivery.”
+
+Brand personality:
+- Modern.
+- Minimalist.
+- Fast.
+- Trustworthy.
+- Urban.
+- Friendly.
+- Premium but affordable.
+
+Colour palette:
+- Primary green: `#16A34A`
+- Deep green: `#14532D`
+- Dark text: `#17231B`
+- Main background: `#F7FAF7`
+- Card background: `#FFFFFF`
+- Secondary text: `#68746B`
+- Light green surface: `#E8F5E9`
+- Border: `#E3EAE3`
+- Error: `#DC2626`
+- Warning: `#D97706`
+
+Use green as the dominant brand colour, not as a colour applied randomly to every component.
+
+Visual rules:
+- Use a clean modern sans-serif font.
+- Use an 8-point spacing system.
+- Rounded cards with approximately 16–24 px corner radii.
+- Rounded buttons with comfortable touch targets.
+- Subtle shadows only when needed.
+- Clear typographic hierarchy.
+- Consistent margins and alignment.
+- Minimal gradients.
+- No excessive borders, decorative graphics, or emoji-heavy interfaces.
+- Use crisp vector icons wherever possible.
+- Use bottom navigation for the main user experiences.
+- Use polished empty states, loading states, confirmation dialogs and error states.
+- Support smaller Android phones without overflow.
+- Keep accessibility, readable contrast and touch target sizes in mind.
+- Avoid generic unstyled Material components.
+
+The first impression should be similar in quality to a modern commercial mobility app.
+
+## 4. APP ARCHITECTURE AND DEMO MODE
+
+Create two distinct role-based experiences within one application.
+
+Provide a role selector on onboarding:
+- Continue as Ridee
+- Continue as Rider
+
+Allow users to switch between roles from the Profile or Settings screen without losing the ability to explore either experience.
+
+Provide a demo mode so the app can be explored immediately without registration, phone verification, passwords, or backend configuration.
+
+Use mock user profiles:
+- Ridee: Alex Morgan.
+- Rider: Jordan Lee.
+
+Clearly label the application as a prototype only where appropriate, but do not place intrusive prototype warnings on every screen.
+
+All screens should be connected through working local navigation.
+
+Use a maintainable architecture with reusable widgets, consistent models and centralised mock data. Do not put the entire app into one enormous source file if the project structure supports multiple files.
+
+## 5. SPLASH SCREEN AND ONBOARDING
+
+Implement:
+1. Animated splash screen featuring the NextRide logo.
+2. Welcome screen with tagline and attractive transport-themed illustration or custom vector artwork.
+3. Three onboarding slides:
+   - Book a bike ride in minutes.
+   - Send parcels across the city.
+   - Earn money as a rider.
+4. Role selection screen.
+5. Demo profile setup.
+6. Optional mock phone-number entry and OTP verification screens. Provide a “Skip demo verification” option.
+7. Permissions explanation screen for location and notifications. Do not request real permissions unless genuinely required.
+8. A polished transition into the selected dashboard.
+
+Onboarding must be skippable and repeatable through Settings.
+
+## 6. RIDEE EXPERIENCE — PASSENGER AND DELIVERY CUSTOMER
+
+Build all the following screens.
+
+### A. Ridee Home
+
+Include:
+- Personalised greeting.
+- Profile avatar.
+- Notification icon with unread badge.
+- Main location/search area.
+- Pickup location card.
+- Destination search field.
+- Map preview with a stylised city map.
+- Current location indicator.
+- Sample road lines and location markers.
+- Primary “Book a Bike” action.
+- Secondary “Send a Parcel” action.
+- Recent destinations.
+- Saved Home and Work locations.
+- Promotional card.
+- Recent activity.
+- Safety and support shortcuts.
+- Bottom navigation: Home, Activity, Offers, Profile.
+
+The home screen should look complete even without GPS or map API access.
+
+### B. Location Search
+
+Include:
+- Pickup search.
+- Destination search.
+- Search input with clear button.
+- Recent locations.
+- Saved places.
+- Mock nearby places.
+- Selection of a location.
+- Map selection preview.
+- Confirm location action.
+
+Example locations should be generic fictional UK city locations. Clearly use mock data rather than claiming to know the user's actual position.
+
+### C. Choose Your Ride
+
+Show:
+- Standard Bike.
+- Comfort Bike.
+- Express Bike, if appropriate for the mock service.
+- Estimated arrival time.
+- Estimated travel duration.
+- Estimated fare in GBP.
+- Passenger capacity.
+- Selected ride card.
+- Pickup and destination summary.
+- Payment method selector.
+- Promo code field.
+- Fare breakdown.
+- Confirm booking button.
+
+Use illustrative fares, not real-time prices. Selecting a ride type must update the fare and estimated arrival information.
+
+### D. Booking Confirmation
+
+Include:
+- Selected ride type.
+- Pickup and destination.
+- Fare.
+- Payment method.
+- Booking reference.
+- Confirm and cancel actions.
+- Cancellation confirmation dialog.
+
+### E. Ride Matching
+
+Show a convincing simulated matching state:
+- Searching animation.
+- Nearby rider cards.
+- Mock estimated matching time.
+- Cancel search action.
+- Successful match transition.
+
+Use deterministic mock state or user-triggered transitions. Do not require a real timer or external service to make the prototype usable.
+
+### F. Rider Assigned / Ride Tracking
+
+Include:
+- Stylised map with pickup, destination and route.
+- Rider avatar.
+- Rider name and rating.
+- Motorcycle make and model.
+- Vehicle registration displayed as fictional demo data.
+- ETA.
+- Call and chat buttons that open mock interaction screens.
+- Share trip button.
+- Safety button.
+- Trip status timeline.
+- Fare and payment summary.
+- Cancel ride action with confirmation.
+
+Include simulated trip states:
+1. Rider assigned.
+2. Rider approaching pickup.
+3. Rider arrived.
+4. Trip started.
+5. Approaching destination.
+6. Trip completed.
+
+Allow users to advance through demo states using clearly labelled test controls or realistic action buttons. Do not imply a real trip is occurring.
+
+### G. Active Ride Screen
+
+Include:
+- Large route map preview.
+- Current trip status.
+- Remaining estimated time and distance.
+- Pickup and drop-off labels.
+- Rider contact controls.
+- Emergency/Safety UI.
+- Share trip UI.
+- Support shortcut.
+
+Safety controls must be clearly marked as demo-only and must not pretend to contact emergency services.
+
+### H. Ride Completed
+
+Include:
+- Success illustration.
+- Fare breakdown.
+- Base fare, distance charge and any illustrative service fee.
+- Payment method.
+- Receipt reference.
+- Rider details.
+- Five-star rating control.
+- Feedback tags.
+- Optional written feedback.
+- Tip selection using mock values.
+- Download receipt button that generates a local mock receipt if supported.
+- Book Another Ride button.
+
+Ratings and tips must update local state.
+
+### I. Parcel Delivery Booking
+
+Create a separate delivery flow.
+
+Include:
+- Sender pickup address.
+- Recipient delivery address.
+- Sender name and contact.
+- Recipient name and contact.
+- Parcel category.
+- Parcel description.
+- Approximate parcel size.
+- Weight selection.
+- Special handling notes.
+- Optional package photo placeholder.
+- Delivery urgency: Standard or Express.
+- Sender and recipient contact preferences.
+- Delivery price estimate.
+- Payment method.
+- Promo code.
+- Terms acknowledgement.
+- Confirm delivery button.
+
+Add a clear notice that prohibited, dangerous or restricted items are not accepted. This is a prototype notice, not a complete legal policy.
+
+### J. Delivery Tracking
+
+Include:
+- Mock route map.
+- Assigned delivery rider.
+- Pickup and destination.
+- ETA.
+- Parcel reference.
+- Sender and recipient details.
+- Status timeline:
+  1. Request placed.
+  2. Rider assigned.
+  3. Rider heading to pickup.
+  4. Parcel collected.
+  5. In transit.
+  6. Out for delivery.
+  7. Delivered.
+- Mock proof-of-delivery screen with signature or photo placeholder.
+- Contact rider and support actions.
+- Cancel delivery action where appropriate.
+
+All transitions should work with local state.
+
+### K. Ridee Activity
+
+Include:
+- Upcoming bookings.
+- Active rides.
+- Past rides.
+- Deliveries.
+- Cancelled bookings.
+- Search and filter controls.
+- Booking detail screens.
+- Fare and delivery receipts.
+- Empty state for new users.
+- Rebook action for previous trips.
+
+Populate the initial activity with several realistic fictional examples.
+
+### L. Offers and Promo Codes
+
+Include:
+- Offers listing.
+- Discount percentage or fixed amount.
+- Expiry labels using illustrative dates.
+- Terms preview.
+- Copy promo code button.
+- Apply promo code flow.
+- Success and invalid-code states.
+
+At least one demo promo code should work locally.
+
+### M. Ridee Payments
+
+Include:
+- Cash.
+- Mock debit/credit card.
+- Mock wallet.
+- Saved payment methods.
+- Add payment method form.
+- Set default payment method.
+- Remove payment method confirmation.
+- Mock transaction history.
+- Fare receipt screen.
+
+Never request or store real card numbers, CVVs or banking credentials. Use obviously fictional masked demo payment details.
+
+### N. Ridee Profile and Settings
+
+Include:
+- Avatar.
+- Name.
+- Email.
+- Phone.
+- Edit profile.
+- Saved addresses.
+- Payment methods.
+- Ride preferences.
+- Notifications.
+- Privacy.
+- Safety settings.
+- Help and support.
+- Terms and privacy policy placeholders.
+- Language selection.
+- Theme selection.
+- Logout confirmation.
+- Switch to Rider mode.
+
+Use local demo data and editable mock forms.
+
+### O. Safety Centre
+
+Include:
+- Safety guidelines.
+- Ride sharing mock screen.
+- Rider and vehicle verification details.
+- Report an issue form.
+- Emergency contact settings.
+- Trip safety checklist.
+- Lost item reporting.
+- Support contact options.
+
+Every emergency-related action must clearly remain a mock action.
+
+### P. Chat and Support
+
+Include:
+- Conversation list.
+- Mock rider conversation.
+- Message bubbles.
+- Text input.
+- Send button.
+- Suggested quick replies.
+- Delivery instructions.
+- Support FAQ list.
+- Issue categories.
+- Support ticket form.
+- Confirmation screen with mock ticket ID.
+
+Messages must be added to local state and displayed immediately.
+
+## 7. RIDER EXPERIENCE — DRIVER AND DELIVERY PARTNER
+
+The Rider experience is equally important. It must be a full, independent interface, not just a profile screen.
+
+### A. Rider Onboarding
+
+Include:
+- Welcome as a NextRide partner.
+- Benefits overview.
+- Name and phone form.
+- Profile photo placeholder.
+- Motorcycle details.
+- Registration number.
+- Motorcycle type.
+- Driving licence details using fictional sample data.
+- Insurance and vehicle document upload placeholders.
+- Bank payout details placeholder.
+- Verification checklist.
+- Pending, approved and rejected demo verification states.
+- Online eligibility screen.
+
+Clearly state that all verification is simulated. Do not upload actual documents or transmit sensitive data.
+
+### B. Rider Home Dashboard
+
+Include:
+- Greeting.
+- Online/offline toggle.
+- Current mock location.
+- Availability status.
+- Today's earnings.
+- Completed rides.
+- Completed deliveries.
+- Acceptance rate.
+- Rating.
+- Online duration.
+- Weekly earnings summary.
+- Earnings chart.
+- Demand indicator on a stylised map.
+- Nearby demand zones.
+- Current active job card.
+- Navigation shortcuts.
+- Bottom navigation: Home, Requests, Earnings, Profile.
+
+Switching online/offline must update local state.
+
+### C. Incoming Passenger Ride Request
+
+Show a realistic incoming request card or dedicated screen containing:
+- Pickup location.
+- Destination.
+- Distance to pickup.
+- Estimated total trip distance.
+- Estimated duration.
+- Estimated earnings.
+- Payment type.
+- Passenger rating.
+- Accept button.
+- Decline button.
+- Request expiry indicator represented without requiring a live countdown.
+
+Accepting the request opens a passenger pickup workflow. Declining it removes the request from the active list and updates the relevant mock statistics.
+
+Provide multiple sample ride requests.
+
+### D. Incoming Delivery Request
+
+Include:
+- Pickup address.
+- Delivery destination.
+- Parcel category.
+- Approximate size and weight.
+- Pickup distance.
+- Delivery distance.
+- Estimated earnings.
+- Delivery urgency.
+- Special instructions.
+- Accept and decline buttons.
+
+Accepting a request creates an active delivery job.
+
+### E. Rider Active Job Workflow
+
+For passenger rides:
+1. Accept ride.
+2. Navigate to pickup.
+3. Mark arrived.
+4. Confirm passenger pickup.
+5. Start ride.
+6. Navigate to destination.
+7. Complete ride.
+8. View earnings summary.
+
+For deliveries:
+1. Accept delivery.
+2. Navigate to sender.
+3. Mark arrived.
+4. Confirm parcel collection.
+5. Start delivery.
+6. Navigate to recipient.
+7. Confirm arrival.
+8. Complete delivery.
+9. Show proof-of-delivery placeholder.
+10. View earnings summary.
+
+All actions must update the displayed status. Add sensible confirmation dialogs for important transitions.
+
+### F. Rider Navigation
+
+Build a dedicated mock navigation screen containing:
+- Map-like canvas.
+- Route line.
+- Current-position marker.
+- Pickup/destination marker.
+- Remaining distance.
+- Estimated arrival.
+- Next-turn instruction card.
+- Recenter map button.
+- End navigation button.
+
+No actual maps API or GPS is required.
+
+### G. Rider Requests Screen
+
+Include:
+- Available passenger rides.
+- Available deliveries.
+- Accepted requests.
+- Completed requests.
+- Request type filter.
+- Earnings and distance previews.
+- Request details.
+- Accept/decline interactions.
+- Empty states.
+
+### H. Rider Earnings
+
+Include:
+- Today's earnings.
+- Weekly earnings.
+- Monthly earnings.
+- Completed ride income.
+- Delivery income.
+- Bonuses.
+- Tips.
+- Platform commission.
+- Net earnings.
+- Daily and weekly chart.
+- Transaction list.
+- Individual earning details.
+- Payout history.
+- Mock withdrawal or payout request form.
+- Payout confirmation screen.
+
+Use internally consistent fictional GBP values. Label financial figures as demo data.
+
+### I. Rider Performance
+
+Include:
+- Overall rating.
+- Rating distribution.
+- Completed jobs.
+- Acceptance rate.
+- Cancellation rate.
+- On-time completion rate.
+- Customer feedback.
+- Achievements and milestones.
+- Performance improvement tips.
+
+Use mock values only.
+
+### J. Rider Wallet and Payouts
+
+Include:
+- Available balance.
+- Pending balance.
+- Total earnings.
+- Mock payout method.
+- Payout schedule.
+- Transaction history.
+- Request payout form.
+- Payout amount validation.
+- Confirmation dialog.
+- Success state.
+
+Never connect to real financial services.
+
+### K. Rider Profile
+
+Include:
+- Rider avatar.
+- Personal details.
+- Vehicle information.
+- Registration details.
+- Licence and insurance status placeholders.
+- Document checklist.
+- Verification status.
+- Rating.
+- Earnings summary.
+- Edit profile.
+- Vehicle edit screen.
+- Availability preferences.
+- Notification settings.
+- Support.
+- Terms.
+- Privacy.
+- Logout.
+- Switch to Ridee mode.
+
+### L. Rider Notifications
+
+Include:
+- New ride requests.
+- Delivery offers.
+- Booking cancellations.
+- Earnings updates.
+- Payout notifications.
+- Verification reminders.
+- Promotional messages.
+- Read/unread state.
+- Mark all as read.
+- Empty state.
+
+### M. Rider Support
+
+Include:
+- Help categories.
+- Earnings issue.
+- Passenger issue.
+- Delivery issue.
+- Safety concern.
+- Account verification.
+- Vehicle documents.
+- Lost property.
+- Submit ticket.
+- Mock ticket history.
+- Ticket detail and reply interface.
+
+## 8. SHARED SCREENS
+
+Create shared, reusable implementations for:
+- Notification centre.
+- Notification detail.
+- Chat.
+- Support.
+- Search.
+- Filters.
+- Confirmation dialogs.
+- Rating components.
+- Payment method selection.
+- Location picker.
+- Booking detail.
+- Receipt detail.
+- Empty state.
+- Error state.
+- Offline/no-network simulation.
+- Settings.
+- About NextRide.
+- Terms and privacy placeholders.
+- App version information.
+
+Use appropriate navigation and back behaviour on every screen.
+
+## 9. MAP IMPLEMENTATION
+
+Maps do not need to be real or interactive geographically.
+
+Build attractive map mockups using one of the following:
+- Custom-painted roads and blocks.
+- Local vector assets.
+- A simple static map illustration with route overlays.
+- A locally available mapping library only if it does not require credentials or network access.
+
+Display clear markers for:
+- Pickup.
+- Destination.
+- Rider.
+- Nearby riders.
+- Delivery location.
+
+Use consistent map styling with the green brand identity. Do not show blank map tiles or an endlessly loading map when no API key exists.
+
+Map mockups should be reusable throughout both experiences.
+
+## 10. STATE AND INTERACTION REQUIREMENTS
+
+Even though this is UI-only, buttons must do something meaningful.
+
+Implement:
+- Role switching.
+- Bottom navigation.
+- Back navigation.
+- Form validation.
+- Search and filtering.
+- Selectable ride types.
+- Fare calculations using mock pricing.
+- Promo code application.
+- Payment selection.
+- Booking confirmation.
+- Request acceptance and rejection.
+- Trip status transitions.
+- Delivery status transitions.
+- Rating and feedback submission.
+- Chat messages.
+- Notification read states.
+- Editable profiles.
+- Online/offline toggle.
+- Earnings filters.
+- Payout form validation.
+- Confirmation and success dialogs.
+- Empty states.
+- Demo reset option.
+
+Use an in-memory state store or simple local state-management approach. Persistence between launches is optional, but if easy to implement, use local preferences only for non-sensitive demo settings.
+
+Do not create buttons that look functional but have no action. If a feature cannot be fully implemented, provide a clearly labelled mock interaction.
+
+## 11. NAVIGATION STRUCTURE
+
+Use a clean, consistent navigation architecture.
+
+Ridee bottom navigation:
+1. Home.
+2. Activity.
+3. Offers.
+4. Profile.
+
+Rider bottom navigation:
+1. Home.
+2. Requests.
+3. Earnings.
+4. Profile.
+
+Secondary screens should use an app bar with a title, back button and relevant actions.
+
+Use a central route/navigation system. Avoid duplicated screens and inconsistent back behaviour.
+
+Ensure that the user can explore the entire prototype from the home screen without needing a special development menu.
+
+Provide a clearly accessible Demo Controls area in Settings to:
+- Reset sample data.
+- Switch roles.
+- Populate demo requests.
+- Advance active trip or delivery status.
+- Reset onboarding.
+
+## 12. MOCK DATA
+
+Create realistic but fictional data for:
+- User profiles.
+- Rider profiles.
+- Motorcycle models.
+- Vehicle registration identifiers.
+- UK city addresses.
+- Coordinates for illustrative map layouts.
+- Passenger ride requests.
+- Delivery requests.
+- Fare estimates.
+- Earnings.
+- Ratings.
+- Notifications.
+- Chat conversations.
+- Booking history.
+- Payment methods.
+- Payout records.
+- Promo codes.
+- Support tickets.
+
+Use GBP formatting consistently. Use sensible UK date and time formatting.
+
+Do not include actual personal data, real phone numbers or real payment credentials.
+
+## 13. UX QUALITY REQUIREMENTS
+
+Before considering the prototype complete:
+- Every screen should have a consistent layout.
+- Every major screen should contain realistic sample content.
+- Buttons must have meaningful local interactions.
+- Forms should validate required fields.
+- Lists must support selection where appropriate.
+- All navigation should be reachable.
+- Long content must scroll correctly.
+- No text should overflow cards.
+- No clipped bottom navigation.
+- Keyboard opening must not hide form actions.
+- Support both smaller and larger Android screen sizes.
+- Use suitable loading and confirmation feedback.
+- Avoid excessive animation that reduces responsiveness.
+- Keep UI code modular and reusable.
+- Use consistent iconography and spacing.
+- Handle empty and error states.
+- Ensure the app launches into a polished screen rather than a blank page.
+
+## 14. TESTING AND FINAL QUALITY CHECK
+
+If a build environment is available:
+1. Resolve dependencies.
+2. Run static analysis.
+3. Build the Android debug APK.
+4. Fix verified compilation and build errors.
+5. Test app launch.
+6. Check role switching.
+7. Check all four bottom navigation destinations for both roles.
+8. Test one complete mock passenger ride.
+9. Test one complete mock delivery.
+10. Test accepting and declining rider requests.
+11. Test editing profiles and changing settings.
+12. Check smaller-screen layouts and scrolling.
+13. Verify that no API keys are required.
+14. Report any tests that could not be performed.
+
+Do not claim to have tested on a physical Android phone unless you actually did so.
+
+## 15. FINAL OUTPUT
+
+Provide:
+- The complete source project.
+- The project folder structure.
+- The application source files.
+- All required local assets.
+- Android configuration and Gradle files.
+- A debug APK if you can genuinely build one.
+- A release APK build path if supported.
+- Exact instructions for installing the APK on an Android phone.
+- Exact commands for building the debug APK locally.
+- A list of implemented screens.
+- A concise list of incomplete features or known limitations.
+
+For a Flutter project, the typical debug build command is:
+
+`flutter build apk --debug`
+
+The usual output location is:
+
+`build/app/outputs/flutter-apk/app-debug.apk`
+
+Only report this file as available if the build has actually produced it.
+
+## FINAL INSTRUCTION
+
+Build NextRide now. Prioritise a beautiful, complete, interactive Android prototype covering both the Ridee and Rider experiences. Do not stop after creating a landing page, a few screenshots or a design plan. Implement the application and its navigation, generate the Android project, build the APK if the available environment supports it, and report the exact deliverables honestly.
