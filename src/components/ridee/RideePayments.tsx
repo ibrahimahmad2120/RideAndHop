@@ -31,7 +31,7 @@ export const RideePayments: React.FC = () => {
       <div className="p-5 rounded-3xl bg-gradient-to-br from-[#14532D] to-[#0A2614] text-white shadow-xl relative overflow-hidden mb-5">
         <div className="flex justify-between items-start">
           <div>
-            <span className="text-[11px] font-medium text-green-300">NextRide Cash Wallet</span>
+            <span className="text-[11px] font-medium text-green-300">RideNHop Cash Wallet</span>
             <div className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">
               £{walletBalance.toFixed(2)}
             </div>

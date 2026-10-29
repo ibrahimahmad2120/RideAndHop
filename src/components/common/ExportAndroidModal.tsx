@@ -13,9 +13,9 @@ export const ExportAndroidModal: React.FC = () => {
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const buildCommands = `# 1. Clone or extract NextRide repository
-git clone <repo-url> nextride-app
-cd nextride-app/android_project
+  const buildCommands = `# 1. Clone or extract RideNHop repository
+git clone <repo-url> ridenhop-app
+cd ridenhop-app/android_project
 
 # 2. Get dependencies
 flutter pub get
@@ -31,7 +31,7 @@ adb install build/app/outputs/flutter-apk/app-debug.apk`;
 
   const manifestSnippet = `<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nextride.app">
+    package="com.ridenhop.app">
 
     <!-- Essential Mobility Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -41,7 +41,7 @@ adb install build/app/outputs/flutter-apk/app-debug.apk`;
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:label="NextRide"
+        android:label="RideNHop"
         android:name="\${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/LaunchTheme"
@@ -76,12 +76,12 @@ adb install build/app/outputs/flutter-apk/app-debug.apk`;
 }
 
 android {
-    namespace "com.nextride.app"
+    namespace "com.ridenhop.app"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     defaultConfig {
-        applicationId "com.nextride.app"
+        applicationId "com.ridenhop.app"
         minSdkVersion 24
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -109,10 +109,10 @@ android {
             </div>
             <div>
               <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                NextRide Android Deliverables & APK Guide
+                RideNHop Android Deliverables & APK Guide
               </h2>
               <p className="text-xs text-slate-400">
-                Package: <code className="text-green-400 font-mono">com.nextride.app</code> · Min SDK 24 · Material 3
+                Package: <code className="text-green-400 font-mono">com.ridenhop.app</code> · Min SDK 24 · Material 3
               </p>
             </div>
           </div>
@@ -185,8 +185,8 @@ android {
               <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/60 text-xs space-y-1.5">
                 <p className="font-semibold text-white">Deliverable Checklist:</p>
                 <ul className="list-disc list-inside space-y-1 text-slate-300">
-                  <li>Application Name: <strong>NextRide</strong></li>
-                  <li>Package Identifier: <strong>com.nextride.app</strong></li>
+                  <li>Application Name: <strong>RideNHop</strong></li>
+                  <li>Package Identifier: <strong>com.ridenhop.app</strong></li>
                   <li>Target Architecture: <strong>arm64-v8a, armeabi-v7a, x86_64</strong></li>
                   <li>Material 3 Theme: Dominant green palette (<code className="text-green-400">#16A34A</code>)</li>
                   <li>Target SDK: 34 (Android 14) / Min SDK: 24 (Android 7.0)</li>

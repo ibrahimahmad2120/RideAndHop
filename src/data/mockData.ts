@@ -125,7 +125,7 @@ export const MOCK_RIDER_JORDAN: RiderInfo = {
 export const MOCK_OFFERS: Offer[] = [
   {
     id: 'off_welcome',
-    code: 'NEXTRIDE50',
+    code: 'RIDENHOP50',
     discountTitle: '50% Off First Two Rides',
     discountValue: '50% OFF',
     minSpend: 4.00,
@@ -159,7 +159,7 @@ export const MOCK_PAYMENT_METHODS: PaymentMethodItem[] = [
   {
     id: 'pm_wallet',
     type: 'wallet',
-    name: 'NextRide Wallet',
+    name: 'RideNHop Wallet',
     detail: 'Instant 1-tap checkout',
     isDefault: true,
     balance: 38.50,
@@ -199,7 +199,7 @@ export const MOCK_NOTIFICATIONS: NotificationItem[] = [
   {
     id: 'notif_2',
     title: 'New Promo Code Unlocked',
-    message: 'Use code NEXTRIDE50 for 50% off your next two urban motorcycle commutes.',
+    message: 'Use code RIDENHOP50 for 50% off your next two urban motorcycle commutes.',
     time: '2h ago',
     isRead: false,
     type: 'promo',
@@ -207,7 +207,7 @@ export const MOCK_NOTIFICATIONS: NotificationItem[] = [
   {
     id: 'notif_3',
     title: 'Safety Check: Helmet Provided',
-    message: 'NextRide partners always supply sanitized BS 6658 / ECE 22.06 certified helmets with fresh disposable hairnets.',
+    message: 'RideNHop partners always supply sanitized BS 6658 / ECE 22.06 certified helmets with fresh disposable hairnets.',
     time: '1d ago',
     isRead: true,
     type: 'safety',
@@ -232,14 +232,14 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
 export const MOCK_PAST_RIDES: RideBooking[] = [
   {
     id: 'bk_past_1',
-    reference: 'NR-8821',
+    reference: 'RH-8821',
     rideType: MOCK_RIDE_OPTIONS[0],
     pickup: MOCK_LOCATIONS[0],
     destination: MOCK_LOCATIONS[1],
     fare: 5.20,
     discount: 0,
     finalFare: 5.20,
-    paymentMethod: 'NextRide Wallet',
+    paymentMethod: 'RideNHop Wallet',
     status: 'completed',
     rider: MOCK_RIDER_JORDAN,
     createdAt: 'Today, 11:45 AM',
@@ -289,7 +289,7 @@ export const MOCK_PAST_DELIVERIES: ParcelDeliveryBooking[] = [
     weight: 'Under 1kg',
     urgency: 'Express',
     price: 8.90,
-    paymentMethod: 'NextRide Wallet',
+    paymentMethod: 'RideNHop Wallet',
     status: 'delivered',
     courier: MOCK_RIDER_JORDAN,
     createdAt: 'Yesterday, 2:30 PM',

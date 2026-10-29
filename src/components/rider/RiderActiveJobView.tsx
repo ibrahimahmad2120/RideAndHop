@@ -96,7 +96,7 @@ export const RiderActiveJobView: React.FC = () => {
         default:
           return {
             title: 'Active Job',
-            instruction: 'NextRide Navigation active',
+            instruction: 'RideNHop Navigation active',
             nextAction: 'Continue',
             sub: '',
           };

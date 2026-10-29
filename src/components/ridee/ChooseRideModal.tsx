@@ -40,7 +40,11 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
   const [showFareBreakdown, setShowFareBreakdown] = useState(false);
 
   const rawFare = selectedRideOption.price;
-  const discount = appliedPromo ? (appliedPromo.code === 'NEXTRIDE50' ? rawFare * 0.5 : 2.50) : 0;
+  const discount = appliedPromo
+    ? (appliedPromo.code === 'RIDENHOP50' || appliedPromo.code === 'NEXTRIDE50'
+        ? rawFare * 0.5
+        : 2.50)
+    : 0;
   const finalFare = Math.max(1.50, +(rawFare - discount).toFixed(2));
 
   const handleApplyPromo = () => {
@@ -78,9 +82,9 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
         {MOCK_RIDE_OPTIONS.map((option: RideTypeOption) => {
           const isSelected = selectedRideOption.id === option.id;
           const discountedOptFare = appliedPromo
-            ? appliedPromo.code === 'NEXTRIDE50'
+            ? (appliedPromo.code === 'RIDENHOP50' || appliedPromo.code === 'NEXTRIDE50'
               ? option.price * 0.5
-              : option.price - 2.50
+              : Math.max(1.50, option.price - 2.50))
             : option.price;
 
           return (
@@ -170,7 +174,7 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
                 type="text"
                 value={promoInput}
                 onChange={(e) => setPromoInput(e.target.value)}
-                placeholder="Enter promo (e.g. NEXTRIDE50)"
+                placeholder="Enter promo (e.g. RIDENHOP50)"
                 className="w-full text-xs font-medium text-[#17231B] bg-transparent outline-hidden uppercase"
               />
             </div>

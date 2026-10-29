@@ -106,7 +106,7 @@ export const RideTrackingView: React.FC<RideTrackingViewProps> = ({
       default:
         return {
           title: 'Active Trip',
-          sub: 'NextRide active motorbike journey',
+          sub: 'RideNHop active motorbike journey',
           eta: '--',
           badge: 'Active',
         };
@@ -116,7 +116,7 @@ export const RideTrackingView: React.FC<RideTrackingViewProps> = ({
   const stageInfo = getStageTitle();
 
   const handleShareTrip = () => {
-    navigator.clipboard.writeText(`https://nextride.app/track/${activeRideBooking.reference}`);
+    navigator.clipboard.writeText(`https://ridenhop.app/track/${activeRideBooking.reference}`);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };

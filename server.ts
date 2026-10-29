@@ -50,7 +50,7 @@ const db = {
   ],
   membership: {
     isActive: true,
-    plan: 'NextRide One',
+    plan: 'RideNHop One',
     renewDate: '24 Nov 2026',
     discountPercent: 10,
     freeDelivery: true,
@@ -215,7 +215,7 @@ async function startServer() {
     });
   });
 
-  // 5. Uber Feature: NextRide One Membership
+  // 5. Uber Feature: RideNHop One Membership
   app.get('/api/membership', (_req: Request, res: Response) => {
     res.json(db.membership);
   });
@@ -225,7 +225,7 @@ async function startServer() {
     res.json({
       success: true,
       membership: db.membership,
-      message: db.membership.isActive ? 'NextRide One activated!' : 'Membership paused',
+      message: db.membership.isActive ? 'RideNHop One activated!' : 'Membership paused',
     });
   });
 
@@ -305,7 +305,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[NextRide Backend] Server active and listening on port ${PORT}`);
+    console.log(`[RideNHop Backend] Server active and listening on port ${PORT}`);
   });
 }
 

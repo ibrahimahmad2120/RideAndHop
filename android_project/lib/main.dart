@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const NextRideApp());
+  runApp(const RideNHopApp());
 }
 
-class NextRideApp extends StatelessWidget {
-  const NextRideApp({super.key});
+class RideNHopApp extends StatelessWidget {
+  const RideNHopApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NextRide',
+      title: 'RideNHop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -21,19 +21,19 @@ class NextRideApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xFFF7FAF7),
       ),
-      home: const NextRideMainScreen(),
+      home: const RideNHopMainScreen(),
     );
   }
 }
 
-class NextRideMainScreen extends StatefulWidget {
-  const NextRideMainScreen({super.key});
+class RideNHopMainScreen extends StatefulWidget {
+  const RideNHopMainScreen({super.key});
 
   @override
-  State<NextRideMainScreen> createState() => _NextRideMainScreenState();
+  State<RideNHopMainScreen> createState() => _RideNHopMainScreenState();
 }
 
-class _NextRideMainScreenState extends State<NextRideMainScreen> {
+class _RideNHopMainScreenState extends State<RideNHopMainScreen> {
   String _currentRole = 'ridee'; // 'ridee' or 'rider'
   int _currentIndex = 0;
   bool _isRiderOnline = true;
@@ -52,11 +52,11 @@ class _NextRideMainScreenState extends State<NextRideMainScreen> {
                 color: const Color(0xFF16A34A),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Text('NR', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+              child: const Text('RH', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
             ),
             const SizedBox(width: 8),
             Text(
-              _currentRole == 'ridee' ? 'NextRide Passenger' : 'NextRide Partner',
+              _currentRole == 'ridee' ? 'RideNHop Passenger' : 'RideNHop Partner',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ],
@@ -159,7 +159,7 @@ class _NextRideMainScreenState extends State<NextRideMainScreen> {
                 children: [
                   Text('50% Off First 2 Rides', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                   SizedBox(height: 4),
-                  Text('Use code NEXTRIDE50 at checkout', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                  Text('Use code RIDENHOP50 at checkout', style: TextStyle(color: Colors.white70, fontSize: 12)),
                 ],
               ),
             ),
@@ -167,7 +167,7 @@ class _NextRideMainScreenState extends State<NextRideMainScreen> {
         ],
       );
     }
-    return Center(child: Text('NextRide Ridee Tab ${_currentIndex + 1}'));
+    return Center(child: Text('RideNHop Ridee Tab ${_currentIndex + 1}'));
   }
 
   Widget _buildRiderView() {

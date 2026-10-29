@@ -37,7 +37,7 @@ export const RideeOffers: React.FC = () => {
             type="text"
             value={testInput}
             onChange={(e) => setTestInput(e.target.value)}
-            placeholder="e.g. NEXTRIDE50"
+            placeholder="e.g. RIDENHOP50"
             className="flex-1 text-xs font-semibold uppercase p-2 rounded-xl border border-slate-200 outline-hidden focus:border-[#16A34A]"
           />
           <button

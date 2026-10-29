@@ -17,7 +17,7 @@ export const RideMatchingView: React.FC = () => {
     <div className="flex-1 flex flex-col justify-between p-6 bg-gradient-to-b from-white to-[#F7FAF7] select-none animate-in fade-in">
       <div className="flex justify-between items-center">
         <span className="text-xs font-bold text-[#16A34A] uppercase tracking-wider">
-          NextRide Dispatch
+          RideNHop Dispatch
         </span>
         <button
           onClick={cancelRideTrip}

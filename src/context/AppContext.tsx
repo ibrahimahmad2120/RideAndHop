@@ -207,10 +207,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const applyPromoCode = (code: string) => {
-    const clean = code.trim().toUpperCase();
+    const clean = code.trim().toUpperCase() === 'NEXTRIDE50' ? 'RIDENHOP50' : code.trim().toUpperCase();
     const found = MOCK_OFFERS.find((o) => o.code === clean);
     if (!found) {
-      return { success: false, message: 'Invalid promo code. Try NEXTRIDE50 or TWOWHEELS' };
+      return { success: false, message: 'Invalid promo code. Try RIDENHOP50 or TWOWHEELS' };
     }
     setAppliedPromo(found);
     return { success: true, message: `Promo applied: ${found.discountTitle}!`, discount: 2.50 };
@@ -225,7 +225,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const newNotif: NotificationItem = {
       id: `topup_${Date.now()}`,
       title: 'Wallet Topped Up',
-      message: `Successfully added £${amount.toFixed(2)} to your NextRide Wallet.`,
+      message: `Successfully added £${amount.toFixed(2)} to your RideNHop Wallet.`,
       time: 'Just now',
       isRead: false,
       type: 'promo',
@@ -236,12 +236,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Booking a Ride
   const startBookingRide = () => {
     const rawFare = selectedRideOption.price;
-    const discount = appliedPromo ? (appliedPromo.code === 'NEXTRIDE50' ? rawFare * 0.5 : 2.50) : 0;
+    const discount = appliedPromo ? (appliedPromo.code === 'RIDENHOP50' || appliedPromo.code === 'NEXTRIDE50' ? rawFare * 0.5 : 2.50) : 0;
     const finalFare = Math.max(1.50, +(rawFare - discount).toFixed(2));
 
     const newBooking: RideBooking = {
       id: `bk_${Date.now()}`,
-      reference: `NR-${Math.floor(1000 + Math.random() * 9000)}`,
+      reference: `RH-${Math.floor(1000 + Math.random() * 9000)}`,
       rideType: selectedRideOption,
       pickup: pickupLocation,
       destination: destinationLocation || MOCK_LOCATIONS[1],

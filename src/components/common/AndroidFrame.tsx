@@ -22,11 +22,11 @@ export const AndroidFrame: React.FC<AndroidFrameProps> = ({ children }) => {
       <header className="w-full max-w-4xl mb-3 flex flex-wrap items-center justify-between gap-3 px-3 py-2 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-slate-800 shadow-xl">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-[#16A34A] flex items-center justify-center font-bold text-white shadow-md shadow-green-900/30">
-            NR
+            RH
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-sm tracking-tight text-white">NextRide</span>
+              <span className="font-bold text-sm tracking-tight text-white">RideNHop</span>
               <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-800 text-green-400 border border-green-500/30">
                 Android Prototype
               </span>
@@ -143,7 +143,7 @@ export const AndroidFrame: React.FC<AndroidFrameProps> = ({ children }) => {
       {/* Footer Prototype Notice */}
       <footer className="w-full max-w-4xl mt-3 text-center text-xs text-slate-500 flex items-center justify-center gap-2">
         <ShieldCheck className="w-3.5 h-3.5 text-green-500" />
-        <span>NextRide Android Prototype · Fictional UK mobility sandbox · No real payments or GPS required</span>
+        <span>RideNHop Android Prototype · Fictional UK mobility sandbox · No real payments or GPS required</span>
       </footer>
     </div>
   );

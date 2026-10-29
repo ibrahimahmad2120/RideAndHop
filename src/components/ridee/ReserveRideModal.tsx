@@ -86,7 +86,7 @@ export const ReserveRideModal: React.FC<ReserveRideModalProps> = ({ onClose }) =
               <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-extrabold text-sm text-[#17231B]">NextRide Reserve</h3>
+              <h3 className="font-extrabold text-sm text-[#17231B]">RideNHop Reserve</h3>
               <p className="text-[11px] text-[#68746B]">Uber Reserve-style scheduled trips</p>
             </div>
           </div>

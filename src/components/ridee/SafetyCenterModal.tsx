@@ -17,7 +17,7 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
     setTimeout(() => {
       setLostReported(false);
       setLostItemText('');
-      alert('Lost item case filed with NextRide 24/7 Operations. Reference: #LST-9102');
+      alert('Lost item case filed with RideNHop 24/7 Operations. Reference: #LST-9102');
     }, 1500);
   };
 
@@ -29,7 +29,7 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-bold text-sm text-[#17231B]">NextRide Safety Centre</h3>
+            <h3 className="font-bold text-sm text-[#17231B]">RideNHop Safety Centre</h3>
             <p className="text-[11px] text-[#68746B]">Your safety is our foundational standard</p>
           </div>
         </div>
@@ -78,7 +78,7 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
             <div className="p-3.5 rounded-2xl bg-[#E8F5E9] border border-green-200">
               <h4 className="font-bold text-green-900 flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-green-700" />
-                <span>NextRide Passenger Safety Rules</span>
+                <span>RideNHop Passenger Safety Rules</span>
               </h4>
               <p className="text-[11px] text-green-800 mt-1">
                 Motorcycle commuting is fast and nimble. Follow these simple tips for a smooth journey.
@@ -129,7 +129,7 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
                 <div>
                   <h5 className="font-bold text-slate-900">Vetted Background & Insurance</h5>
                   <p className="text-[11px] text-slate-500 mt-0.5">
-                    Every NextRide driver passes rigorous DVLA licence checks, enhanced DBS vetting, and holds commercial passenger hire & reward coverage.
+                    Every RideNHop driver passes rigorous DVLA licence checks, enhanced DBS vetting, and holds commercial passenger hire & reward coverage.
                   </p>
                 </div>
               </div>

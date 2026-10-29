@@ -120,7 +120,7 @@ export const RideeHome: React.FC<RideeHomeProps> = ({
         </div>
       </div>
 
-      {/* NextRide One / Uber One Membership Strip */}
+      {/* RideNHop One / Uber One Membership Strip */}
       {membershipActive && (
         <div className="bg-slate-900 text-white px-4 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-1.5">
@@ -128,7 +128,7 @@ export const RideeHome: React.FC<RideeHomeProps> = ({
               ONE
             </span>
             <span className="text-[11px] font-semibold text-slate-200">
-              NextRide One Member · 10% off rides & free delivery active
+              RideNHop One Member · 10% off rides & free delivery active
             </span>
           </div>
           <span className="text-[10px] text-green-400 font-bold">Saved £34.80</span>
@@ -268,7 +268,7 @@ export const RideeHome: React.FC<RideeHomeProps> = ({
                 {appliedPromo ? `${appliedPromo.code}: ${appliedPromo.discountTitle}` : '50% Off Your First 2 Rides'}
               </h4>
               <p className="text-[10px] text-green-100">
-                {appliedPromo ? 'Applied automatically at checkout' : 'Tap to copy code NEXTRIDE50'}
+                {appliedPromo ? 'Applied automatically at checkout' : 'Tap to copy code RIDENHOP50'}
               </p>
             </div>
           </div>

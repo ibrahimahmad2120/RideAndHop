@@ -263,7 +263,7 @@ export const ParcelDeliveryModal: React.FC<ParcelDeliveryModalProps> = ({ onClos
         <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
           <AlertOctagon className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <p className="text-[11px] leading-relaxed">
-            <strong>Prohibited Items Notice:</strong> NextRide couriers do not transport cash, illegal substances,
+            <strong>Prohibited Items Notice:</strong> RideNHop couriers do not transport cash, illegal substances,
             firearms, flammable chemicals, or fragile oversized cargo. Max motorcycle carry capacity is 10kg.
           </p>
         </div>
@@ -276,7 +276,7 @@ export const ParcelDeliveryModal: React.FC<ParcelDeliveryModalProps> = ({ onClos
             onChange={(e) => setAcceptedTerms(e.target.checked)}
             className="w-4 h-4 accent-[#16A34A] rounded"
           />
-          <span>I confirm parcel complies with NextRide transport standards.</span>
+          <span>I confirm parcel complies with RideNHop transport standards.</span>
         </label>
 
         {/* Submit */}

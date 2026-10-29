@@ -17,11 +17,11 @@ export const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
   const faqs = [
     {
       q: 'Are motorcycle helmets always provided?',
-      a: 'Yes! Every NextRide partner carries a certified ECE 22.06 / BS 6658 motorcycle helmet with clean disposable hairnets for each passenger ride.',
+      a: 'Yes! Every RideNHop partner carries a certified ECE 22.06 / BS 6658 motorcycle helmet with clean disposable hairnets for each passenger ride.',
     },
     {
       q: 'What is the maximum parcel weight for couriers?',
-      a: 'NextRide couriers operate street motorcycles and can safely carry up to 10kg packages in weather-sealed top boxes or specialized courier backpacks.',
+      a: 'RideNHop couriers operate street motorcycles and can safely carry up to 10kg packages in weather-sealed top boxes or specialized courier backpacks.',
     },
     {
       q: 'How does cancellation work?',
@@ -50,7 +50,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
             <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
               <Headphones className="w-4 h-4" />
             </div>
-            <h3 className="font-bold text-sm text-[#17231B]">NextRide Support</h3>
+            <h3 className="font-bold text-sm text-[#17231B]">RideNHop Support</h3>
           </div>
           <button onClick={onClose} className="p-1 rounded-full text-slate-400 hover:bg-slate-100">
             <X className="w-4 h-4" />

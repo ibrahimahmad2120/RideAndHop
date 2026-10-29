@@ -1,7 +1,7 @@
-# NextRide Android Prototype — Build & Installation Guide
+# RideNHop Android Prototype — Build & Installation Guide
 
-Package Name: `com.nextride.app`  
-Application Name: `NextRide`  
+Package Name: `com.ridenhop.app`  
+Application Name: `RideNHop`  
 Platform: Android (Material 3)  
 Minimum SDK: 24 (Android 7.0)  
 Target SDK: 34 (Android 14)  
@@ -61,7 +61,7 @@ adb install build/app/outputs/flutter-apk/app-debug.apk
 1. Transfer `app-debug.apk` to your phone via USB cable, Google Drive, or local share.
 2. On your Android phone, tap the file in your Files / Downloads app.
 3. Allow "Install unknown apps" if prompted.
-4. Launch **NextRide**!
+4. Launch **RideNHop**!
 
 ---
 
@@ -79,4 +79,4 @@ Output:
 ## 5. Cloud Sandbox Environment Note
 
 The AI Studio container environment is a Node.js web runtime (no JDK/Flutter CLI installed directly in this container). 
-The application running live in the browser preview is an interactive web-based mobile prototype reproducing every single requirement, screen, workflow, and interaction of NextRide. The complete Flutter/Android project source in `android_project/` is provided above for local APK compilation.
+The application running live in the browser preview is an interactive web-based mobile prototype reproducing every single requirement, screen, workflow, and interaction of RideNHop. The complete Flutter/Android project source in `android_project/` is provided above for local APK compilation.

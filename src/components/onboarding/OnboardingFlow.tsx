@@ -50,7 +50,7 @@ export const OnboardingFlow: React.FC = () => {
           <div className="w-24 h-24 rounded-3xl bg-[#16A34A] flex items-center justify-center shadow-2xl ring-8 ring-green-500/20 animate-pulse">
             <Bike className="w-12 h-12 text-white" />
           </div>
-          <h1 className="mt-6 text-3xl font-extrabold tracking-tight">NextRide</h1>
+          <h1 className="mt-6 text-3xl font-extrabold tracking-tight">RideNHop</h1>
           <p className="mt-2 text-xs font-medium text-green-200 tracking-wide text-center">
             Your city. Your ride. Your delivery.
           </p>
@@ -137,7 +137,7 @@ export const OnboardingFlow: React.FC = () => {
             <Sparkles className="w-5 h-5" />
           </div>
           <h2 className="text-2xl font-bold text-[#17231B] tracking-tight">
-            How will you use NextRide?
+            How will you use RideNHop?
           </h2>
           <p className="text-xs text-[#68746B] mt-1">
             Choose your initial mode. You can toggle between roles at any time.
@@ -344,7 +344,7 @@ export const OnboardingFlow: React.FC = () => {
         }}
         className="w-full h-13 rounded-2xl bg-[#16A34A] hover:bg-[#15803D] active:scale-[0.98] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-green-900/20 transition-all"
       >
-        <span>Allow & Enter NextRide</span>
+        <span>Allow & Enter RideNHop</span>
         <ArrowRight className="w-4 h-4" />
       </button>
     </div>

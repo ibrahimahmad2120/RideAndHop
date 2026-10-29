@@ -133,7 +133,7 @@ export const RiderProfile: React.FC = () => {
 
       {/* Badges / Milestones */}
       <div className="p-4 rounded-3xl bg-white border border-[#E3EAE3] shadow-xs space-y-2">
-        <span className="text-xs font-bold text-[#17231B] block">Earned NextRide Badges</span>
+        <span className="text-xs font-bold text-[#17231B] block">Earned RideNHop Badges</span>
         <div className="space-y-2">
           {badges.map((b, i) => (
             <div key={i} className="flex items-center gap-3 p-2 rounded-2xl bg-amber-50/50 border border-amber-200/60">
