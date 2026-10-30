@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, ArrowLeft, Navigation, Volume2, X, Compass, ShieldAlert } from 'lucide-react';
 import { StylizedMap } from '../common/StylizedMap';
 import { IncomingJobRequest } from '../../types';
+import { useApp } from '../../context/AppContext';
 
 interface RiderNavigationHUDProps {
   onCloseHUD: () => void;
@@ -14,6 +15,7 @@ export const RiderNavigationHUD: React.FC<RiderNavigationHUDProps> = ({
   activeJob,
   onAdvance,
 }) => {
+  const { showToast } = useApp();
   return (
     <div className="flex-1 flex flex-col bg-slate-950 text-white select-none relative h-full">
       {/* Top Turn Instruction Card (Dark Mode GPS style) */}
@@ -67,15 +69,15 @@ export const RiderNavigationHUD: React.FC<RiderNavigationHUDProps> = ({
         {/* Recenter & Audio Controls */}
         <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
           <button
-            onClick={() => alert('Voice directions unmuted: "In 200m turn left on Oxford Road"')}
-            className="w-10 h-10 rounded-2xl bg-slate-950/90 border border-slate-700 text-white flex items-center justify-center shadow-md hover:bg-slate-800"
+            onClick={() => showToast('Voice directions unmuted: "In 200m turn left on Oxford Road"', 'info')}
+            className="w-10 h-10 rounded-2xl bg-slate-950/90 border border-slate-700 text-white flex items-center justify-center shadow-md hover:bg-slate-800 transition-colors"
           >
             <Volume2 className="w-4 h-4" />
           </button>
 
           <button
-            onClick={() => alert('Map recentered on motorcycle GPS telemetry')}
-            className="w-10 h-10 rounded-2xl bg-slate-950/90 border border-slate-700 text-green-400 flex items-center justify-center shadow-md hover:bg-slate-800"
+            onClick={() => showToast('Map recentered on motorcycle GPS telemetry', 'success')}
+            className="w-10 h-10 rounded-2xl bg-slate-950/90 border border-slate-700 text-green-400 flex items-center justify-center shadow-md hover:bg-slate-800 transition-colors"
           >
             <Navigation className="w-4 h-4" />
           </button>

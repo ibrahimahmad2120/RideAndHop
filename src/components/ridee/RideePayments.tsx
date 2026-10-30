@@ -3,7 +3,7 @@ import { Wallet, Plus, CreditCard, Check, ShieldCheck, ArrowUpRight, ArrowDownLe
 import { useApp } from '../../context/AppContext';
 
 export const RideePayments: React.FC = () => {
-  const { walletBalance, topUpWallet, paymentMethods, selectedPaymentMethod, setSelectedPaymentMethod } = useApp();
+  const { walletBalance, topUpWallet, paymentMethods, selectedPaymentMethod, setSelectedPaymentMethod, showToast } = useApp();
   const [showTopUp, setShowTopUp] = useState(false);
   const [topUpAmount, setTopUpAmount] = useState<number>(20);
   const [showAddCard, setShowAddCard] = useState(false);
@@ -198,7 +198,7 @@ export const RideePayments: React.FC = () => {
             <button
               onClick={() => {
                 setShowAddCard(false);
-                alert(`Added demo card ending in •••• ${cardLast4}`);
+                showToast(`Added demo card ending in •••• ${cardLast4}`, 'success');
               }}
               className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs"
             >

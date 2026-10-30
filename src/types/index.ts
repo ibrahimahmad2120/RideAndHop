@@ -197,3 +197,9 @@ export interface SplitFareData {
   createdAt: string;
 }
 
+export interface ToastItem {
+  id: string;
+  message: string;
+  type?: 'success' | 'info' | 'warning' | 'error';
+}
+

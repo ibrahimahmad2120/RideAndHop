@@ -16,12 +16,14 @@
   user-select: none;
 }
 
-body {
-  background-color: #0f172a;
-  color: #17231b;
-  overflow-x: hidden;
+html, body, #root {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background-color: #f7faf7;
+  color: #17231b;
 }
 
 /* Custom scrollbar for mobile drawers */

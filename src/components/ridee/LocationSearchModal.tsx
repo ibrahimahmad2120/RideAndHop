@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { X, Search, MapPin, Clock, Bookmark, ArrowRight, Check, Plus, Trash2 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { MOCK_LOCATIONS } from '../../data/mockData';
@@ -29,10 +29,14 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
 
   const currentText = getCurrentSearchText();
 
-  const filteredLocations = MOCK_LOCATIONS.filter((loc) =>
-    loc.name.toLowerCase().includes(currentText.toLowerCase()) ||
-    loc.address.toLowerCase().includes(currentText.toLowerCase())
-  );
+  const filteredLocations = useMemo(() => {
+    const query = currentText.toLowerCase().trim();
+    if (!query) return MOCK_LOCATIONS;
+    return MOCK_LOCATIONS.filter((loc) =>
+      loc.name.toLowerCase().includes(query) ||
+      loc.address.toLowerCase().includes(query)
+    );
+  }, [currentText]);
 
   const handleSelect = async (loc: LocationItem) => {
     if (activeInput === 'pickup') {
@@ -61,7 +65,7 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
+    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
       {/* Top Search Bar Header */}
       <div className="p-4 border-b border-[#E3EAE3] bg-white">
         <div className="flex items-center justify-between mb-3">

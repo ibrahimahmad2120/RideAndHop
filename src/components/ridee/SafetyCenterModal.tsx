@@ -7,6 +7,7 @@ interface SafetyCenterModalProps {
 }
 
 export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose }) => {
+  const { showToast } = useApp();
   const [activeTab, setActiveTab] = useState<'checklist' | 'emergency' | 'lost'>('checklist');
   const [lostItemText, setLostItemText] = useState('');
   const [lostReported, setLostReported] = useState(false);
@@ -17,12 +18,12 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
     setTimeout(() => {
       setLostReported(false);
       setLostItemText('');
-      alert('Lost item case filed with RideNHop 24/7 Operations. Reference: #LST-9102');
+      showToast('Lost item case filed with RideNHop 24/7 Operations. Reference: #LST-9102', 'success');
     }, 1500);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
+    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
       <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-green-100 text-green-700 flex items-center justify-center">
@@ -150,7 +151,7 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
             </div>
 
             <button
-              onClick={() => alert('[PROTOTYPE SIMULATION]: In a live app, this transmits live GPS coordinates and rider license details to emergency services.')}
+              onClick={() => showToast('Emergency protocol simulated: GPS telemetry dispatched to response team.', 'warning')}
               className="w-full py-3.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-colors"
             >
               <PhoneCall className="w-4 h-4" />

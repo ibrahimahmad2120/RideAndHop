@@ -34,6 +34,7 @@ export const RideTrackingView: React.FC<RideTrackingViewProps> = ({
     rideTripStage,
     advanceRideTripStage,
     cancelRideTrip,
+    showToast,
   } = useApp();
 
   const [copiedLink, setCopiedLink] = useState(false);
@@ -122,7 +123,7 @@ export const RideTrackingView: React.FC<RideTrackingViewProps> = ({
   };
 
   const handleMockCall = () => {
-    alert(`Connecting mock audio line to ${rider.name} (${rider.phone})... In a commercial deployment, this uses twilio masked calling.`);
+    showToast(`Connecting masked audio call to ${rider.name} (${rider.phone})...`, 'info');
   };
 
   return (

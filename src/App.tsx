@@ -106,24 +106,26 @@ const MainAppContent: React.FC = () => {
 
           {/* Default Tabbed View when no active full-screen trip */}
           {rideTripStage === 'idle' && deliveryTripStage === 'idle' && (
-            <div className="flex-1 flex flex-col relative h-full">
-              {activeRideeTab === 'home' && (
-                <RideeHome
-                  onOpenSearch={() => openModal('search_location')}
-                  onOpenChooseRide={() => openModal('choose_ride')}
-                  onOpenParcelModal={() => openModal('parcel_delivery')}
-                  onOpenNotifications={() => openModal('notifications')}
-                  onOpenSafety={() => openModal('safety_center')}
-                  onOpenReserve={() => openModal('reserve_ride')}
-                />
-              )}
+            <div className="flex-1 flex flex-col relative h-full min-h-0 overflow-hidden">
+              <div className="flex-1 overflow-y-auto overscroll-contain">
+                {activeRideeTab === 'home' && (
+                  <RideeHome
+                    onOpenSearch={() => openModal('search_location')}
+                    onOpenChooseRide={() => openModal('choose_ride')}
+                    onOpenParcelModal={() => openModal('parcel_delivery')}
+                    onOpenNotifications={() => openModal('notifications')}
+                    onOpenSafety={() => openModal('safety_center')}
+                    onOpenReserve={() => openModal('reserve_ride')}
+                  />
+                )}
 
-              {activeRideeTab === 'activity' && <RideeActivity />}
-              {activeRideeTab === 'offers' && <RideeOffers />}
-              {activeRideeTab === 'profile' && <RideeProfile />}
+                {activeRideeTab === 'activity' && <RideeActivity />}
+                {activeRideeTab === 'offers' && <RideeOffers />}
+                {activeRideeTab === 'profile' && <RideeProfile />}
+              </div>
 
               {/* Ridee Bottom Navigation Bar (Material 3 style) */}
-              <nav className="fixed bottom-0 left-0 right-0 z-30 h-16 bg-white/95 backdrop-blur-md border-t border-[#E3EAE3] flex items-center justify-around px-2 select-none">
+              <nav className="shrink-0 w-full h-16 bg-white/95 backdrop-blur-md border-t border-[#E3EAE3] flex items-center justify-around px-2 select-none z-20">
                 <button
                   onClick={() => setActiveRideeTab('home')}
                   className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
@@ -176,20 +178,22 @@ const MainAppContent: React.FC = () => {
           {activeRiderJob ? (
             <RiderActiveJobView />
           ) : (
-            <div className="flex-1 flex flex-col relative h-full">
-              {activeRiderTab === 'home' && (
-                <RiderHome
-                  onOpenRequests={() => setActiveRiderTab('requests')}
-                  onOpenEarnings={() => setActiveRiderTab('earnings')}
-                />
-              )}
+            <div className="flex-1 flex flex-col relative h-full min-h-0 overflow-hidden">
+              <div className="flex-1 overflow-y-auto overscroll-contain">
+                {activeRiderTab === 'home' && (
+                  <RiderHome
+                    onOpenRequests={() => setActiveRiderTab('requests')}
+                    onOpenEarnings={() => setActiveRiderTab('earnings')}
+                  />
+                )}
 
-              {activeRiderTab === 'requests' && <RiderRequests />}
-              {activeRiderTab === 'earnings' && <RiderEarnings />}
-              {activeRiderTab === 'profile' && <RiderProfile />}
+                {activeRiderTab === 'requests' && <RiderRequests />}
+                {activeRiderTab === 'earnings' && <RiderEarnings />}
+                {activeRiderTab === 'profile' && <RiderProfile />}
+              </div>
 
               {/* Rider Bottom Navigation Bar */}
-              <nav className="fixed bottom-0 left-0 right-0 z-30 h-16 bg-white/95 backdrop-blur-md border-t border-[#E3EAE3] flex items-center justify-around px-2 select-none">
+              <nav className="shrink-0 w-full h-16 bg-white/95 backdrop-blur-md border-t border-[#E3EAE3] flex items-center justify-around px-2 select-none z-20">
                 <button
                   onClick={() => setActiveRiderTab('home')}
                   className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
@@ -256,7 +260,7 @@ const MainAppContent: React.FC = () => {
 
       {/* Choose Ride Modal */}
       {activeModal === 'choose_ride' && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/50 backdrop-blur-xs">
+        <div className="absolute inset-0 z-50 flex flex-col justify-end bg-black/50 backdrop-blur-xs">
           <ChooseRideModal
             onConfirm={() => {
               startBookingRide();
@@ -338,8 +342,8 @@ export default function App() {
     <AppProvider>
       <AndroidFrame>
         <MainAppContent />
+        <DemoControls />
       </AndroidFrame>
-      <DemoControls />
     </AppProvider>
   );
 }

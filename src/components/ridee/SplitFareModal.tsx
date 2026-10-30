@@ -56,7 +56,7 @@ export const SplitFareModal: React.FC<SplitFareModalProps> = ({ totalFare, onClo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in zoom-in-95 duration-200">
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs animate-in zoom-in-95 duration-200">
       <div className="w-full max-w-xs bg-white rounded-3xl p-5 border border-[#E3EAE3] shadow-2xl space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-slate-100">

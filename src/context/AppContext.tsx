@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import {
   UserRole,
   LocationItem,
@@ -14,6 +14,7 @@ import {
   SupportTicket,
   IncomingJobRequest,
   RiderInfo,
+  ToastItem,
 } from '../types';
 import {
   MOCK_LOCATIONS,
@@ -116,6 +117,11 @@ interface AppContextType {
   openModal: (modalName: string) => void;
   closeModal: () => void;
 
+  // In-App Toast & Feedback (replaces window.alert)
+  toasts: ToastItem[];
+  showToast: (message: string, type?: 'success' | 'info' | 'warning' | 'error') => void;
+  dismissToast: (id: string) => void;
+
   // Global Demo reset
   resetAllDemoState: () => void;
 }
@@ -185,26 +191,58 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Modal control
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
-  const switchRole = (newRole: UserRole) => {
+  // In-App Toast system
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const toastTimersRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const dismissToast = useCallback((id: string) => {
+    const timer = toastTimersRef.current.get(id);
+    if (timer) {
+      clearTimeout(timer);
+      toastTimersRef.current.delete(id);
+    }
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  const showToast = useCallback((message: string, type: 'success' | 'info' | 'warning' | 'error' = 'info') => {
+    const id = `toast_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const newToast: ToastItem = { id, message, type };
+    setToasts((prev) => [...prev.slice(-2), newToast]); // max 3 active toasts
+
+    const timer = setTimeout(() => {
+      dismissToast(id);
+    }, 3200);
+    toastTimersRef.current.set(id, timer);
+  }, [dismissToast]);
+
+  useEffect(() => {
+    return () => {
+      // Cleanup all pending toast timers on unmount
+      toastTimersRef.current.forEach((t) => clearTimeout(t));
+      toastTimersRef.current.clear();
+    };
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setActiveModal(null);
+  }, []);
+
+  const openModal = useCallback((modalName: string) => {
+    setActiveModal(modalName);
+  }, []);
+
+  const switchRole = useCallback((newRole: UserRole) => {
     setCurrentRole(newRole);
     closeModal();
-  };
+  }, [closeModal]);
 
-  const completeOnboarding = () => {
+  const completeOnboarding = useCallback(() => {
     setHasCompletedOnboarding(true);
-  };
+  }, []);
 
-  const resetOnboarding = () => {
+  const resetOnboarding = useCallback(() => {
     setHasCompletedOnboarding(false);
-  };
-
-  const openModal = (modalName: string) => {
-    setActiveModal(modalName);
-  };
-
-  const closeModal = () => {
-    setActiveModal(null);
-  };
+  }, []);
 
   const applyPromoCode = (code: string) => {
     const clean = code.trim().toUpperCase() === 'NEXTRIDE50' ? 'RIDENHOP50' : code.trim().toUpperCase();
@@ -480,6 +518,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
+  const chatTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const sendChatMessage = (text: string) => {
     if (!text.trim()) return;
     const userMsg: ChatMessage = {
@@ -491,8 +531,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     setChatMessages((prev) => [...prev, userMsg]);
 
+    if (chatTimerRef.current) {
+      clearTimeout(chatTimerRef.current);
+    }
+
     // Simulated quick rider reply after 800ms
-    setTimeout(() => {
+    chatTimerRef.current = setTimeout(() => {
       const autoReplyText = text.toLowerCase().includes('helmet')
         ? 'Yes! I have a sanitized Nolan size M helmet with full face shield and disposable liner.'
         : text.toLowerCase().includes('where') || text.toLowerCase().includes('outside')
@@ -506,8 +550,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setChatMessages((prev) => [...prev, riderReply]);
+      chatTimerRef.current = null;
     }, 900);
   };
+
+  useEffect(() => {
+    return () => {
+      if (chatTimerRef.current) {
+        clearTimeout(chatTimerRef.current);
+      }
+    };
+  }, []);
 
   const submitSupportTicket = (category: string, subject: string, message: string) => {
     const ticketId = `TCK-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -539,81 +592,130 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     closeModal();
   };
 
+  const contextValue = useMemo<AppContextType>(
+    () => ({
+      currentRole,
+      switchRole,
+      deviceFrameEnabled,
+      setDeviceFrameEnabled,
+      activeRideeTab,
+      setActiveRideeTab,
+      activeRiderTab,
+      setActiveRiderTab,
+      hasCompletedOnboarding,
+      completeOnboarding,
+      resetOnboarding,
+      pickupLocation,
+      destinationLocation,
+      setPickupLocation,
+      setDestinationLocation,
+      selectedRideOption,
+      setSelectedRideOption,
+      appliedPromo,
+      applyPromoCode,
+      removePromo,
+      paymentMethods,
+      selectedPaymentMethod,
+      setSelectedPaymentMethod,
+      walletBalance,
+      topUpWallet,
+      rideTripStage,
+      activeRideBooking,
+      startBookingRide,
+      advanceRideTripStage,
+      cancelRideTrip,
+      submitRideReview,
+      resetRideToIdle,
+      deliveryTripStage,
+      activeDeliveryBooking,
+      startParcelDeliveryBooking,
+      advanceDeliveryTripStage,
+      cancelDeliveryTrip,
+      resetDeliveryToIdle,
+      pastRides,
+      pastDeliveries,
+      isRiderOnline,
+      setIsRiderOnline,
+      riderProfile,
+      riderEarningsToday,
+      riderBalance,
+      riderCompletedRides,
+      riderCompletedDeliveries,
+      riderAcceptanceRate,
+      riderRating,
+      incomingRequests,
+      activeRiderJob,
+      riderJobStage,
+      acceptJobRequest,
+      declineJobRequest,
+      advanceRiderJobStage,
+      completeRiderJob,
+      cancelRiderJob,
+      requestPayout,
+      notifications,
+      unreadNotifCount,
+      markNotificationRead,
+      markAllNotificationsRead,
+      chatMessages,
+      sendChatMessage,
+      supportTickets,
+      submitSupportTicket,
+      activeModal,
+      openModal,
+      closeModal,
+      toasts,
+      showToast,
+      dismissToast,
+      resetAllDemoState,
+    }),
+    [
+      currentRole,
+      switchRole,
+      deviceFrameEnabled,
+      activeRideeTab,
+      activeRiderTab,
+      hasCompletedOnboarding,
+      completeOnboarding,
+      resetOnboarding,
+      pickupLocation,
+      destinationLocation,
+      selectedRideOption,
+      appliedPromo,
+      paymentMethods,
+      selectedPaymentMethod,
+      walletBalance,
+      rideTripStage,
+      activeRideBooking,
+      deliveryTripStage,
+      activeDeliveryBooking,
+      pastRides,
+      pastDeliveries,
+      isRiderOnline,
+      riderProfile,
+      riderEarningsToday,
+      riderBalance,
+      riderCompletedRides,
+      riderCompletedDeliveries,
+      riderAcceptanceRate,
+      riderRating,
+      incomingRequests,
+      activeRiderJob,
+      riderJobStage,
+      notifications,
+      unreadNotifCount,
+      chatMessages,
+      supportTickets,
+      activeModal,
+      openModal,
+      closeModal,
+      toasts,
+      showToast,
+      dismissToast,
+    ]
+  );
+
   return (
-    <AppContext.Provider
-      value={{
-        currentRole,
-        switchRole,
-        deviceFrameEnabled,
-        setDeviceFrameEnabled,
-        activeRideeTab,
-        setActiveRideeTab,
-        activeRiderTab,
-        setActiveRiderTab,
-        hasCompletedOnboarding,
-        completeOnboarding,
-        resetOnboarding,
-        pickupLocation,
-        destinationLocation,
-        setPickupLocation,
-        setDestinationLocation,
-        selectedRideOption,
-        setSelectedRideOption,
-        appliedPromo,
-        applyPromoCode,
-        removePromo,
-        paymentMethods,
-        selectedPaymentMethod,
-        setSelectedPaymentMethod,
-        walletBalance,
-        topUpWallet,
-        rideTripStage,
-        activeRideBooking,
-        startBookingRide,
-        advanceRideTripStage,
-        cancelRideTrip,
-        submitRideReview,
-        resetRideToIdle,
-        deliveryTripStage,
-        activeDeliveryBooking,
-        startParcelDeliveryBooking,
-        advanceDeliveryTripStage,
-        cancelDeliveryTrip,
-        resetDeliveryToIdle,
-        pastRides,
-        pastDeliveries,
-        isRiderOnline,
-        setIsRiderOnline,
-        riderProfile,
-        riderEarningsToday,
-        riderBalance,
-        riderCompletedRides,
-        riderCompletedDeliveries,
-        riderAcceptanceRate,
-        riderRating,
-        incomingRequests,
-        activeRiderJob,
-        riderJobStage,
-        acceptJobRequest,
-        declineJobRequest,
-        advanceRiderJobStage,
-        completeRiderJob,
-        cancelRiderJob,
-        requestPayout,
-        notifications,
-        unreadNotifCount,
-        markNotificationRead,
-        markAllNotificationsRead,
-        chatMessages,
-        sendChatMessage,
-        supportTickets,
-        submitSupportTicket,
-        activeModal,
-        openModal,
-        closeModal,
-        resetAllDemoState,
-      }}
-    >
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );

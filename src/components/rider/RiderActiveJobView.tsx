@@ -27,6 +27,7 @@ export const RiderActiveJobView: React.FC = () => {
     advanceRiderJobStage,
     cancelRiderJob,
     openModal,
+    showToast,
   } = useApp();
 
   const [showHUD, setShowHUD] = useState(false);
@@ -293,8 +294,8 @@ export const RiderActiveJobView: React.FC = () => {
         {/* Contact customer / Call & Chat */}
         <div className="flex items-center gap-2">
           <button
-            onClick={() => alert(`Connecting masked line to passenger ${activeRiderJob.customerName}...`)}
-            className="flex-1 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 flex items-center justify-center gap-1.5"
+            onClick={() => showToast(`Connecting masked call to passenger ${activeRiderJob.customerName}...`, 'info')}
+            className="flex-1 py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 flex items-center justify-center gap-1.5 transition-colors"
           >
             <Phone className="w-4 h-4 text-green-600" />
             <span>Call Customer</span>

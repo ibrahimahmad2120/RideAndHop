@@ -61,7 +61,7 @@ export const ParcelDeliveryModal: React.FC<ParcelDeliveryModalProps> = ({ onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-300">
+    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-300">
       {/* Top Header */}
       <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between bg-white">
         <div className="flex items-center gap-2.5">

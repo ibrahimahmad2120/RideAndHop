@@ -13,7 +13,14 @@ interface StylizedMapProps {
   zoomLevel?: 'standard' | 'focused' | 'city';
 }
 
-export const StylizedMap: React.FC<StylizedMapProps> = ({
+const STATIC_NEARBY_BIKES = [
+  { id: 'b1', x: 42, y: 38, deg: 45 },
+  { id: 'b2', x: 62, y: 68, deg: 120 },
+  { id: 'b3', x: 30, y: 60, deg: -30 },
+  { id: 'b4', x: 78, y: 42, deg: 90 },
+] as const;
+
+export const StylizedMap: React.FC<StylizedMapProps> = React.memo(({
   pickup,
   destination,
   riderPosition,
@@ -28,20 +35,13 @@ export const StylizedMap: React.FC<StylizedMapProps> = ({
   const dX = destination ? destination.x : 75;
   const dY = destination ? destination.y : 35;
 
-  const nearbyBikes = [
-    { id: 'b1', x: 42, y: 38, deg: 45 },
-    { id: 'b2', x: 62, y: 68, deg: 120 },
-    { id: 'b3', x: 30, y: 60, deg: -30 },
-    { id: 'b4', x: 78, y: 42, deg: 90 },
-  ];
-
-  const handleSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handleSvgClick = React.useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     if (!onMapClick) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
     const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
     onMapClick(x, y);
-  };
+  }, [onMapClick]);
 
   return (
     <div className={`relative w-full ${heightClass} bg-[#F4F7F4] overflow-hidden select-none border-b border-[#E3EAE3]`}>
@@ -194,7 +194,7 @@ export const StylizedMap: React.FC<StylizedMapProps> = ({
       {/* Nearby Idle Motorcycle Drivers on map */}
       {showNearbyBikes && !riderPosition && (
         <>
-          {nearbyBikes.map((bike) => (
+          {STATIC_NEARBY_BIKES.map((bike) => (
             <div
               key={bike.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-700"
@@ -235,4 +235,4 @@ export const StylizedMap: React.FC<StylizedMapProps> = ({
       )}
     </div>
   );
-};
+});

@@ -29,6 +29,7 @@ export const DeliveryTrackingView: React.FC<DeliveryTrackingViewProps> = ({
     advanceDeliveryTripStage,
     cancelDeliveryTrip,
     resetDeliveryToIdle,
+    showToast,
   } = useApp();
 
   const [showCancelPrompt, setShowCancelPrompt] = useState(false);
@@ -160,8 +161,8 @@ export const DeliveryTrackingView: React.FC<DeliveryTrackingViewProps> = ({
 
           <div className="flex items-center gap-1.5">
             <button
-              onClick={() => alert(`Calling courier ${courier.name} at ${courier.phone}...`)}
-              className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700"
+              onClick={() => showToast(`Connecting masked call to courier ${courier.name} (${courier.phone})...`, 'info')}
+              className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-colors"
             >
               <Phone className="w-4 h-4" />
             </button>

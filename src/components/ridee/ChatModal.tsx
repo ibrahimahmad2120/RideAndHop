@@ -24,7 +24,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
+    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
       {/* Header */}
       <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between bg-white">
         <div className="flex items-center gap-3">

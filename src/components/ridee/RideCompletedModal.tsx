@@ -127,10 +127,19 @@ export const RideCompletedModal: React.FC = () => {
     setSubmitSuccess(true);
   };
 
+  const receiptTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleDownloadReceipt = () => {
     setReceiptDownloaded(true);
-    setTimeout(() => setReceiptDownloaded(false), 2500);
+    if (receiptTimerRef.current) clearTimeout(receiptTimerRef.current);
+    receiptTimerRef.current = setTimeout(() => setReceiptDownloaded(false), 2500);
   };
+
+  React.useEffect(() => {
+    return () => {
+      if (receiptTimerRef.current) clearTimeout(receiptTimerRef.current);
+    };
+  }, []);
 
   const handleReportLostItem = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,7 +162,7 @@ export const RideCompletedModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
       <div className="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3EAE3] flex flex-col max-h-[92vh]">
         {/* Top Header Card */}
         <div className="p-4 bg-gradient-to-b from-[#E8F5E9] to-white border-b border-slate-100 flex items-center justify-between">
