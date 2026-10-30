@@ -107,7 +107,7 @@ const MainAppContent: React.FC = () => {
           {/* Default Tabbed View when no active full-screen trip */}
           {rideTripStage === 'idle' && deliveryTripStage === 'idle' && (
             <div className="flex-1 flex flex-col relative h-full min-h-0 overflow-hidden">
-              <div className="flex-1 overflow-y-auto overscroll-contain">
+              <div className="flex-1 overflow-y-auto overscroll-contain touch-pan-y min-h-0">
                 {activeRideeTab === 'home' && (
                   <RideeHome
                     onOpenSearch={() => openModal('search_location')}
@@ -179,7 +179,7 @@ const MainAppContent: React.FC = () => {
             <RiderActiveJobView />
           ) : (
             <div className="flex-1 flex flex-col relative h-full min-h-0 overflow-hidden">
-              <div className="flex-1 overflow-y-auto overscroll-contain">
+              <div className="flex-1 overflow-y-auto overscroll-contain touch-pan-y min-h-0">
                 {activeRiderTab === 'home' && (
                   <RiderHome
                     onOpenRequests={() => setActiveRiderTab('requests')}
@@ -260,14 +260,19 @@ const MainAppContent: React.FC = () => {
 
       {/* Choose Ride Modal */}
       {activeModal === 'choose_ride' && (
-        <div className="absolute inset-0 z-50 flex flex-col justify-end bg-black/50 backdrop-blur-xs">
-          <ChooseRideModal
-            onConfirm={() => {
-              startBookingRide();
-              closeModal();
-            }}
-            onCancel={closeModal}
-          />
+        <div
+          onClick={closeModal}
+          className="absolute inset-0 z-50 flex flex-col justify-end bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
+        >
+          <div onClick={(e) => e.stopPropagation()} className="w-full">
+            <ChooseRideModal
+              onConfirm={() => {
+                startBookingRide();
+                closeModal();
+              }}
+              onCancel={closeModal}
+            />
+          </div>
         </div>
       )}
 

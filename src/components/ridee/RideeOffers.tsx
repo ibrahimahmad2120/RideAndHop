@@ -23,7 +23,7 @@ export const RideeOffers: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F7FAF7] select-none p-4 pb-20">
+    <div className="flex-1 flex flex-col bg-[#F7FAF7] select-none p-4 pb-28">
       <div className="mb-4">
         <h2 className="text-xl font-bold text-[#17231B] tracking-tight">Promotions & Vouchers</h2>
         <p className="text-xs text-[#68746B]">Exclusive discounts on city rides & courier delivery</p>

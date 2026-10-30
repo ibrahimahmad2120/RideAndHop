@@ -162,8 +162,14 @@ export const RideCompletedModal: React.FC = () => {
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3EAE3] flex flex-col max-h-[92vh]">
+    <div
+      onClick={resetRideToIdle}
+      className="absolute inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3EAE3] flex flex-col max-h-[92vh]"
+      >
         {/* Top Header Card */}
         <div className="p-4 bg-gradient-to-b from-[#E8F5E9] to-white border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-3">

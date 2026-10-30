@@ -36,6 +36,53 @@ export const ParcelDeliveryModal: React.FC<ParcelDeliveryModalProps> = ({ onClos
   const [hasPhoto, setHasPhoto] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(true);
 
+  // Swipe-down to dismiss gesture
+  const [dragY, setDragY] = useState(0);
+  const [startY, setStartY] = useState<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    setStartY(e.clientY);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (startY === null) return;
+    const diff = e.clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handlePointerUp = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startY === null) return;
+    const diff = e.touches[0].clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
   const estimatedFare = urgency === 'Express' ? 8.90 : 5.80;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,25 +108,39 @@ export const ParcelDeliveryModal: React.FC<ParcelDeliveryModalProps> = ({ onClos
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-300">
-      {/* Top Header */}
-      <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between bg-white">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center">
-            <Package className="w-4 h-4" />
+    <div
+      style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined }}
+      className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-300 transition-transform select-none"
+    >
+      {/* Top Header with Drag Handle */}
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="p-4 pt-2.5 border-b border-[#E3EAE3] bg-white cursor-grab active:cursor-grabbing touch-none"
+      >
+        <div className="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full mx-auto mb-2.5 transition-colors" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center">
+              <Package className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-[#17231B]">Send a Parcel by Bike</h3>
+              <p className="text-[11px] text-[#68746B]">Same-day rapid courier dispatch</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold text-sm text-[#17231B]">Send a Parcel by Bike</h3>
-            <p className="text-[11px] text-[#68746B]">Same-day rapid courier dispatch</p>
-          </div>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
+            <X className="w-5 h-5" />
+          </button>
         </div>
-        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500">
-          <X className="w-5 h-5" />
-        </button>
       </div>
 
       {/* Form Content */}
-      <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+      <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overscroll-contain p-4 pb-28 sm:p-5 sm:pb-28 space-y-4">
         {/* Addresses Section */}
         <div className="p-3.5 rounded-2xl bg-[#F7FAF7] border border-[#E3EAE3] space-y-3">
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">

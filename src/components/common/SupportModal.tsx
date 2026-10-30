@@ -43,8 +43,14 @@ export const SupportModal: React.FC<SupportModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in zoom-in-95 duration-200">
-      <div className="w-full max-w-sm bg-white rounded-3xl border border-[#E3EAE3] shadow-2xl p-4 sm:p-5 flex flex-col space-y-4 max-h-[85vh] overflow-y-auto">
+    <div
+      onClick={onClose}
+      className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in zoom-in-95 duration-200"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm bg-white rounded-3xl border border-[#E3EAE3] shadow-2xl p-4 sm:p-5 flex flex-col space-y-4 max-h-[85vh] overflow-y-auto"
+      >
         <div className="flex items-center justify-between pb-2 border-b border-slate-100">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">

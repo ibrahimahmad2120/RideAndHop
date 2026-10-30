@@ -77,7 +77,7 @@ export const RideeHome: React.FC<RideeHomeProps> = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#F7FAF7] select-none pb-20">
+    <div className="flex-1 flex flex-col bg-[#F7FAF7] select-none pb-28">
       {/* Top App Bar Zone */}
       <div className="px-4 pt-2 pb-3 bg-white border-b border-[#E3EAE3] flex items-center justify-between">
         <div className="flex items-center gap-3">

@@ -12,6 +12,53 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
   const [lostItemText, setLostItemText] = useState('');
   const [lostReported, setLostReported] = useState(false);
 
+  // Swipe-down to dismiss gesture
+  const [dragY, setDragY] = useState(0);
+  const [startY, setStartY] = useState<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    setStartY(e.clientY);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (startY === null) return;
+    const diff = e.clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handlePointerUp = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startY === null) return;
+    const diff = e.touches[0].clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
   const handleReportLost = (e: React.FormEvent) => {
     e.preventDefault();
     setLostReported(true);
@@ -23,20 +70,35 @@ export const SafetyCenterModal: React.FC<SafetyCenterModalProps> = ({ onClose })
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
-      <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-green-100 text-green-700 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5" />
+    <div
+      style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined }}
+      className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200 transition-transform select-none"
+    >
+      {/* Top Header with Drag Handle */}
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="p-4 pt-2.5 border-b border-[#E3EAE3] bg-white cursor-grab active:cursor-grabbing touch-none"
+      >
+        <div className="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full mx-auto mb-2.5 transition-colors" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-green-100 text-green-700 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-[#17231B]">RideNHop Safety Centre</h3>
+              <p className="text-[11px] text-[#68746B]">Your safety is our foundational standard</p>
+            </div>
           </div>
-          <div>
-            <h3 className="font-bold text-sm text-[#17231B]">RideNHop Safety Centre</h3>
-            <p className="text-[11px] text-[#68746B]">Your safety is our foundational standard</p>
-          </div>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
+            <X className="w-5 h-5" />
+          </button>
         </div>
-        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500">
-          <X className="w-5 h-5" />
-        </button>
       </div>
 
       {/* Tabs */}

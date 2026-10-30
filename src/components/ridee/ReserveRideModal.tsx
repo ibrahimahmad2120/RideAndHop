@@ -77,8 +77,14 @@ export const ReserveRideModal: React.FC<ReserveRideModalProps> = ({ onClose }) =
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3EAE3] flex flex-col max-h-[90vh]">
+    <div
+      onClick={onClose}
+      className="absolute inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-in fade-in duration-200"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-sm bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E3EAE3] flex flex-col max-h-[90vh]"
+      >
         {/* Header */}
         <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-white">
           <div className="flex items-center gap-2.5">

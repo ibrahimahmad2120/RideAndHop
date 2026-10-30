@@ -10,6 +10,30 @@ export const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
   const { chatMessages, sendChatMessage, riderProfile } = useApp();
   const [inputText, setInputText] = useState('');
 
+  // Swipe-down to dismiss gesture
+  const [dragY, setDragY] = useState(0);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY === null) return;
+    const diff = e.touches[0].clientY - touchStartY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 60) {
+      onClose();
+    }
+    setDragY(0);
+    setTouchStartY(null);
+  };
+
   const quickReplies = [
     "I'm at the main entrance waiting",
     'Wearing black jacket and blue jeans',
@@ -24,32 +48,43 @@ export const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
-      {/* Header */}
-      <div className="p-4 border-b border-[#E3EAE3] flex items-center justify-between bg-white">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <img
-              src={riderProfile.avatar}
-              alt={riderProfile.name}
-              referrerPolicy="no-referrer"
-              className="w-10 h-10 rounded-2xl object-cover border border-green-500"
-            />
-            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border border-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <h3 className="font-bold text-sm text-[#17231B]">{riderProfile.name}</h3>
-              <span className="text-[10px] font-semibold text-green-700 bg-green-100 px-1.5 py-0.2 rounded-full">
-                Rider
-              </span>
+    <div
+      style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined }}
+      className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200 transition-transform select-none"
+    >
+      {/* Header with Swipe Handle */}
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="p-4 pt-2.5 border-b border-[#E3EAE3] bg-white cursor-grab active:cursor-grabbing"
+      >
+        <div className="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full mx-auto mb-2.5 transition-colors" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <img
+                src={riderProfile.avatar}
+                alt={riderProfile.name}
+                referrerPolicy="no-referrer"
+                className="w-10 h-10 rounded-2xl object-cover border border-green-500"
+              />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border border-white" />
             </div>
-            <p className="text-[11px] text-[#68746B]">{riderProfile.bikeModel} · {riderProfile.registrationNumber}</p>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="font-bold text-sm text-[#17231B]">{riderProfile.name}</h3>
+                <span className="text-[10px] font-semibold text-green-700 bg-green-100 px-1.5 py-0.2 rounded-full">
+                  Rider
+                </span>
+              </div>
+              <p className="text-[11px] text-[#68746B]">{riderProfile.bikeModel} · {riderProfile.registrationNumber}</p>
+            </div>
           </div>
+          <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
+            <X className="w-5 h-5" />
+          </button>
         </div>
-        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500">
-          <X className="w-5 h-5" />
-        </button>
       </div>
 
       {/* Safety Banner */}

@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Clock,
   Sparkles,
+  X,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { MOCK_RIDE_OPTIONS } from '../../data/mockData';
@@ -39,6 +40,53 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
   const [showPaymentPicker, setShowPaymentPicker] = useState(false);
   const [showFareBreakdown, setShowFareBreakdown] = useState(false);
 
+  // Swipe-down / drag-down to dismiss gesture
+  const [dragY, setDragY] = useState(0);
+  const [startY, setStartY] = useState<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    setStartY(e.clientY);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (startY === null) return;
+    const diff = e.clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handlePointerUp = () => {
+    if (dragY > 40) {
+      onCancel();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startY === null) return;
+    const diff = e.touches[0].clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 40) {
+      onCancel();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
   const rawFare = selectedRideOption.price;
   const discount = appliedPromo
     ? (appliedPromo.code === 'RIDENHOP50' || appliedPromo.code === 'NEXTRIDE50'
@@ -59,26 +107,49 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
   };
 
   return (
-    <div className="bg-white rounded-t-3xl shadow-2xl border-t border-[#E3EAE3] p-4 sm:p-5 flex flex-col space-y-4 animate-in slide-in-from-bottom duration-300">
-      {/* Top Handle */}
-      <div className="w-10 h-1.5 bg-slate-300 rounded-full mx-auto" />
-
-      {/* Route Summary */}
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100 text-xs">
-        <div className="flex items-center gap-2 truncate">
-          <span className="font-bold text-[#17231B] truncate">{pickupLocation.name.split('(')[0]}</span>
-          <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <span className="font-bold text-[#17231B] truncate">
-            {destinationLocation ? destinationLocation.name.split('(')[0] : 'City Destination'}
-          </span>
+    <div
+      style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined }}
+      className="bg-white rounded-t-3xl shadow-2xl border-t border-[#E3EAE3] flex flex-col max-h-[85dvh] sm:max-h-[88vh] overflow-hidden animate-in slide-in-from-bottom duration-250 transition-transform select-none"
+    >
+      {/* Top Drag & Swipe Handle Zone */}
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="shrink-0 pt-3 pb-2.5 px-5 cursor-grab active:cursor-grabbing border-b border-slate-100/80 bg-white touch-none"
+      >
+        <div className="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full mx-auto mb-2 transition-colors" />
+        {/* Route Summary */}
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2 truncate flex-1 mr-2">
+            <span className="font-bold text-[#17231B] truncate">{pickupLocation.name.split('(')[0]}</span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span className="font-bold text-[#17231B] truncate">
+              {destinationLocation ? destinationLocation.name.split('(')[0] : 'City Destination'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[11px] font-semibold text-green-700 whitespace-nowrap bg-green-50 px-2 py-0.5 rounded-full">
+              ~2.4 km · 11 min
+            </span>
+            <button
+              onClick={onCancel}
+              className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition-colors"
+              title="Close"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
-        <span className="text-[11px] font-medium text-slate-500 whitespace-nowrap ml-2">
-          ~2.4 km · 11 min
-        </span>
       </div>
 
-      {/* Ride Options Cards */}
-      <div className="space-y-2">
+      {/* Scrollable Content Body (Options, Notice, Promo, Payment) */}
+      <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-3 min-h-0">
+        {/* Ride Options Cards */}
+        <div className="space-y-2">
         {MOCK_RIDE_OPTIONS.map((option: RideTypeOption) => {
           const isSelected = selectedRideOption.id === option.id;
           const discountedOptFare = appliedPromo
@@ -240,19 +311,20 @@ export const ChooseRideModal: React.FC<ChooseRideModalProps> = ({ onConfirm, onC
           )}
         </div>
       </div>
+      </div>
 
-      {/* Total & Action Buttons */}
-      <div className="pt-2 flex items-center gap-3">
+      {/* Sticky Bottom Action Buttons Footer */}
+      <div className="shrink-0 p-4 pt-2.5 border-t border-slate-100 flex items-center gap-3 bg-white shadow-xs">
         <button
           onClick={onCancel}
-          className="py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors"
+          className="py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors shrink-0"
         >
           Cancel
         </button>
 
         <button
           onClick={onConfirm}
-          className="flex-1 h-13 rounded-2xl bg-[#16A34A] hover:bg-[#15803D] active:scale-[0.98] text-white font-bold text-sm flex items-center justify-between px-5 shadow-lg shadow-green-900/20 transition-all"
+          className="flex-1 h-12 rounded-2xl bg-[#16A34A] hover:bg-[#15803D] active:scale-[0.98] text-white font-bold text-sm flex items-center justify-between px-5 shadow-lg shadow-green-900/20 transition-all"
         >
           <span>Confirm {selectedRideOption.name}</span>
           <span className="text-base font-extrabold">£{finalFare.toFixed(2)}</span>

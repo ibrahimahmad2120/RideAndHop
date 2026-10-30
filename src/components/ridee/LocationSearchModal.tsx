@@ -21,6 +21,53 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
   const [activeInput, setActiveInput] = useState<'pickup' | 'stop' | 'dest'>('dest');
   const [multiStopSummary, setMultiStopSummary] = useState<{ fare: number; minutes: number } | null>(null);
 
+  // Swipe-down to dismiss gesture
+  const [dragY, setDragY] = useState(0);
+  const [startY, setStartY] = useState<number | null>(null);
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    setStartY(e.clientY);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (startY === null) return;
+    const diff = e.clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handlePointerUp = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startY === null) return;
+    const diff = e.touches[0].clientY - startY;
+    if (diff > 0) {
+      setDragY(diff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (dragY > 40) {
+      onClose();
+    }
+    setDragY(0);
+    setStartY(null);
+  };
+
   const getCurrentSearchText = () => {
     if (activeInput === 'dest') return destText;
     if (activeInput === 'stop') return stopText;
@@ -65,9 +112,21 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200">
-      {/* Top Search Bar Header */}
-      <div className="p-4 border-b border-[#E3EAE3] bg-white">
+    <div
+      style={{ transform: dragY > 0 ? `translateY(${dragY}px)` : undefined }}
+      className="absolute inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom duration-200 select-none transition-transform"
+    >
+      {/* Top Search Bar Header with Swipe Pull Handle */}
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="p-4 pt-2.5 border-b border-[#E3EAE3] bg-white cursor-grab active:cursor-grabbing touch-none"
+      >
+        <div className="w-12 h-1.5 bg-slate-300 hover:bg-slate-400 rounded-full mx-auto mb-2.5 transition-colors" />
         <div className="flex items-center justify-between mb-3">
           <h3 className="font-bold text-base text-[#17231B]">
             {activeInput === 'dest'
@@ -78,7 +137,7 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
           </h3>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500"
+            className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -206,7 +265,7 @@ export const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
       </div>
 
       {/* Locations List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div className="flex-1 overflow-y-auto overscroll-contain p-4 pb-24 space-y-2">
         <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
           {activeInput === 'dest'
             ? 'Popular & Saved Places'
